@@ -10,13 +10,13 @@ from mem0.embeddings.ollama import OllamaEmbedding
 def mock_ollama_client():
     with patch("mem0.embeddings.ollama.Client") as mock_ollama:
         mock_client = Mock()
-        mock_client.list.return_value = {"models": [{"name": "nomic-embed-text"}]}
+        mock_client.list.return_value = {"models": [{"name": "bge-m3:567m"}]}
         mock_ollama.return_value = mock_client
         yield mock_client
 
 
 def test_embed_text(mock_ollama_client):
-    config = BaseEmbedderConfig(model="nomic-embed-text", embedding_dims=512)
+    config = BaseEmbedderConfig(model="bge-m3:567m", embedding_dims=512)
     embedder = OllamaEmbedding(config)
 
     mock_response = {"embedding": [0.1, 0.2, 0.3, 0.4, 0.5]}
@@ -25,13 +25,13 @@ def test_embed_text(mock_ollama_client):
     text = "Sample text to embed."
     embedding = embedder.embed(text)
 
-    mock_ollama_client.embeddings.assert_called_once_with(model="nomic-embed-text", prompt=text)
+    mock_ollama_client.embeddings.assert_called_once_with(model="bge-m3:567m", prompt=text)
 
     assert embedding == [0.1, 0.2, 0.3, 0.4, 0.5]
 
 
 def test_ensure_model_exists(mock_ollama_client):
-    config = BaseEmbedderConfig(model="nomic-embed-text", embedding_dims=512)
+    config = BaseEmbedderConfig(model="bge-m3:567m", embedding_dims=512)
     embedder = OllamaEmbedding(config)
 
     mock_ollama_client.pull.assert_not_called()
@@ -40,4 +40,4 @@ def test_ensure_model_exists(mock_ollama_client):
 
     embedder._ensure_model_exists()
 
-    mock_ollama_client.pull.assert_called_once_with("nomic-embed-text")
+    mock_ollama_client.pull.assert_called_once_with("bge-m3:567m")
