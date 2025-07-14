@@ -2,15 +2,6 @@ import os
 from mem0 import Memory
 
 config = {
-        "vector_store": {
-        "provider": "qdrant",
-        "config": {
-            "collection_name": "test",
-            "host": "localhost",
-            "port": 6333,
-            "embedding_model_dims": 768,  # Change this according to your local model's dimensions
-        },
-    },
     "llm": {
         "provider": "vllm",
         "config": {
