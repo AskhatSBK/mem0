@@ -11,12 +11,14 @@ config = {
             "max_tokens": 2000,
         }
     },
-        "embedder": {
+    "embedder": {
         "provider": "ollama",
         "config": {
-            "model": "bge-m3:567m"
-        }
-    }
+            "model": "bge-m3:567m",
+            # Alternatively, you can use "snowflake-arctic-embed:latest"
+            "ollama_base_url": "http://localhost:11434",
+        },
+    },
 }
 
 m = Memory.from_config(config)
