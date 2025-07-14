@@ -22,3 +22,7 @@ config = {
 }
 
 m = Memory.from_config(config)
+
+m.add("I'm visiting Paris", user_id="john")
+
+memories = m.get_all(user_id="john")
