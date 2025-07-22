@@ -1,4 +1,3 @@
-name: mem0-dev
 
 services:
   mem0:

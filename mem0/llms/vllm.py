@@ -58,7 +58,7 @@ class VllmLLM(LLMBase):
         messages: List[Dict[str, str]],
         response_format=None,
         tools: Optional[List[Dict]] = None,
-        tool_choice: str = "auto",
+        tool_choice: str = "none",
     ):
         """
         Generate a response based on the given messages using vLLM.

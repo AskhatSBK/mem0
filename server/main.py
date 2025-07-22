@@ -21,6 +21,7 @@ POSTGRES_DB = os.environ.get("POSTGRES_DB", "postgres")
 POSTGRES_USER = os.environ.get("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "postgres")
 POSTGRES_COLLECTION_NAME = os.environ.get("POSTGRES_COLLECTION_NAME", "memories")
+POSTGRES_EMBEDDING_MODEL_DIMS = int(os.environ.get("POSTGRES_EMBEDDING_MODEL_DIMS", 1024))
 
 NEO4J_URI = os.environ.get("NEO4J_URI", "bolt://neo4j:7687")
 NEO4J_USERNAME = os.environ.get("NEO4J_USERNAME", "neo4j")
@@ -44,6 +45,7 @@ DEFAULT_CONFIG = {
             "user": POSTGRES_USER,
             "password": POSTGRES_PASSWORD,
             "collection_name": POSTGRES_COLLECTION_NAME,
+            "embedding_model_dims": POSTGRES_EMBEDDING_MODEL_DIMS,  # Default dimension size
         },
     },
     "graph_store": {
@@ -53,10 +55,10 @@ DEFAULT_CONFIG = {
     "llm": {
         "provider": "vllm",
         "config": {
-            "model": "unsloth/gemma-3-1b-it",
-            "vllm_base_url": "http://localhost:8000/v1",
+            "model": "RedHatAI/Llama-4-Scout-17B-16E-Instruct-quantized.w4a16",
+            "vllm_base_url": "https://u7fcynba6cc0lr-8000.proxy.runpod.net/v1", # Links to model (if RunPod - https://*********-8000.proxy.runpod.net/, if local - http://172.10.0.1:8000/)
             "temperature": 0.1,
-            "max_tokens": 2000,
+            "max_tokens": 8000,
         }
     },
     "embedder": {
@@ -64,7 +66,7 @@ DEFAULT_CONFIG = {
         "config": {
             "model": "bge-m3:567m",
             # Alternatively, you can use "snowflake-arctic-embed:latest"
-            "ollama_base_url": "http://localhost:11434",
+            "ollama_base_url": "https://l6eif56mp8snbc-11434.proxy.runpod.net/",
         },
     },
     "history_db_path": HISTORY_DB_PATH,
