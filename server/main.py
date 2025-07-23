@@ -15,12 +15,12 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 load_dotenv()
 
 LLM_MODEL = os.environ.get("LLM_MODEL", "RedHatAI/Llama-4-Scout-17B-16E-Instruct-quantized.w4a16")
-LLM_HOST_URL = os.environ.get("LLM_HOST_URL", "https://9yr9nmwgrz2p50-8000.proxy.runpod.net/v1")
+LLM_HOST_URL = os.environ.get("LLM_HOST_URL", "http://localhost:8000/")
 LLM_TEMP = os.environ.get("LLM_TEMP", "0.1")
 LLM_MAX_TOKEN = os.environ.get("LLM_MAX_TOKEN", "8192")
 
 EMBEDDER_MODEL = os.environ.get("EMBEDDER_MODEL", "bge-m3:567m")
-EMBEDDER_HOST_URL = os.environ.get("EMBEDDER_HOST_URL", "https://9yr9nmwgrz2p50-11434.proxy.runpod.net/")
+EMBEDDER_HOST_URL = os.environ.get("EMBEDDER_HOST_URL", "http://localhost:11434/")
 
 POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "postgres")
 POSTGRES_PORT = os.environ.get("POSTGRES_PORT", "5432")
@@ -64,7 +64,7 @@ DEFAULT_CONFIG = {
         "config": {
             "model": LLM_MODEL,
             "vllm_base_url": LLM_HOST_URL + "v1", # Links to model (if RunPod - https://*********-8000.proxy.runpod.net/, if local - http://172.10.0.1:8000/)
-            "temperature": int(LLM_TEMP),
+            "temperature": float(LLM_TEMP),
             "max_tokens": int(LLM_MAX_TOKEN),
         }
     },
