@@ -14,6 +14,13 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 # Load environment variables
 load_dotenv()
 
+LLM_MODEL = os.environ.get("LLM_MODEL", "RedHatAI/Llama-4-Scout-17B-16E-Instruct-quantized.w4a16")
+LLM_HOST_URL = os.environ.get("LLM_HOST_URL", "http://localhost:8000/")
+LLM_TEMP = os.environ.get("LLM_TEMP", "0.1")
+LLM_MAX_TOKEN = os.environ.get("LLM_MAX_TOKEN", "8192")
+
+EMBEDDER_MODEL = os.environ.get("EMBEDDER_MODEL", "bge-m3:567m")
+EMBEDDER_HOST_URL = os.environ.get("EMBEDDER_HOST_URL", "http://localhost:11434/")
 
 POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "postgres")
 POSTGRES_PORT = os.environ.get("POSTGRES_PORT", "5432")
@@ -21,7 +28,7 @@ POSTGRES_DB = os.environ.get("POSTGRES_DB", "postgres")
 POSTGRES_USER = os.environ.get("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "postgres")
 POSTGRES_COLLECTION_NAME = os.environ.get("POSTGRES_COLLECTION_NAME", "memories")
-POSTGRES_EMBEDDING_MODEL_DIMS = int(os.environ.get("POSTGRES_EMBEDDING_MODEL_DIMS", 1024))
+POSTGRES_EMBEDDING_MODEL_DIMS = os.environ.get("POSTGRES_EMBEDDING_MODEL_DIMS", "1024")
 
 NEO4J_URI = os.environ.get("NEO4J_URI", "bolt://neo4j:7687")
 NEO4J_USERNAME = os.environ.get("NEO4J_USERNAME", "neo4j")
@@ -55,18 +62,17 @@ DEFAULT_CONFIG = {
     "llm": {
         "provider": "vllm",
         "config": {
-            "model": "RedHatAI/Llama-4-Scout-17B-16E-Instruct-quantized.w4a16",
-            "vllm_base_url": "https://u7fcynba6cc0lr-8000.proxy.runpod.net/v1", # Links to model (if RunPod - https://*********-8000.proxy.runpod.net/, if local - http://172.10.0.1:8000/)
-            "temperature": 0.1,
-            "max_tokens": 8000,
+            "model": LLM_MODEL,
+            "vllm_base_url": LLM_HOST_URL + "v1", # Links to model (if RunPod - https://*********-8000.proxy.runpod.net/, if local - http://172.10.0.1:8000/)
+            "temperature": float(LLM_TEMP),
+            "max_tokens": int(LLM_MAX_TOKEN),
         }
     },
     "embedder": {
         "provider": "ollama",
         "config": {
-            "model": "bge-m3:567m",
-            # Alternatively, you can use "snowflake-arctic-embed:latest"
-            "ollama_base_url": "https://l6eif56mp8snbc-11434.proxy.runpod.net/",
+            "model": EMBEDDER_MODEL,
+            "ollama_base_url": EMBEDDER_HOST_URL,
         },
     },
     "history_db_path": HISTORY_DB_PATH,
