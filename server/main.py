@@ -16,7 +16,7 @@ load_dotenv()
 
 LLM_MODEL = os.environ.get("LLM_MODEL", "RedHatAI/Llama-4-Scout-17B-16E-Instruct-quantized.w4a16")
 LLM_HOST_URL = os.environ.get("LLM_HOST_URL", "http://localhost:8000/")
-LLM_TEMP = os.environ.get("LLM_TEMP", "0.1")
+LLM_TEMP = os.environ.get("LLM_TEMP", 0.1)
 LLM_MAX_TOKEN = os.environ.get("LLM_MAX_TOKEN", "8192")
 
 EMBEDDER_MODEL = os.environ.get("EMBEDDER_MODEL", "bge-m3:567m")
